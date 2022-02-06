@@ -9,6 +9,7 @@ RUN ls
 
 RUN pwd
 
+
 RUN cargo build --release
 
 RUN cargo install --path .
