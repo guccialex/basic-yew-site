@@ -16,4 +16,6 @@ cd server
 
 cargo build --release
 
+#cp ./target/release/server .
+
 cargo run --release
