@@ -3,16 +3,10 @@ name = "yew"
 version = "0.1.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
 
 yew = "0.19"
-
 reqwest = { version = "0.11.8", features = ["json"] }
-
-gloo = "*"
-
-web-sys = "*"
-
-serde_json = "*"
+gloo = "0.4.2"
+web-sys = "0.3.56"
+serde_json = "1.0.78"

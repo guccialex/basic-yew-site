@@ -14,4 +14,6 @@ RUN cargo build --release
 
 RUN cargo install --path .
 
+EXPOSE 8080
+
 CMD server
