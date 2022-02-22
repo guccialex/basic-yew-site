@@ -1072,7 +1072,9 @@ dependencies = [
 name = "yew"
 version = "0.1.0"
 dependencies = [
+ "gloo",
  "reqwest",
+ "serde_json",
  "web-sys",
  "yew 0.19.3",
 ]

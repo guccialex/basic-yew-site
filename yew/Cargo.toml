@@ -9,11 +9,10 @@ edition = "2021"
 
 yew = "0.19"
 
-
-
 reqwest = { version = "0.11.8", features = ["json"] }
 
-
-#gloo = "*"
+gloo = "*"
 
 web-sys = "*"
+
+serde_json = "*"

@@ -1,33 +1,34 @@
-use actix_web::{App, HttpServer};
+use actix_web::http::header::HttpDate;
+use actix_web::{App, HttpServer, HttpRequest};
 mod generated;
-use actix_web::{HttpResponse };
-use actix_web::{web};
-use actix_web::{get};
-use actix_web::{post};
+use actix_web::{HttpResponse};
+use actix_web::{web, get, post};
 use serde_json::Value;
 
 
 //returns (Hour, Minute, Seconds)
-async pub fn fetch_amsterdam_time( )  -> Option<(i64,i64,i64)>{
+async fn fetch_amsterdam_time( )  -> Option<(i64,i64,i64)>{
 
-    //documentation of this api at https://www.timeapi.io/swagger/index.html
-    //whatever api you call must have the same origin or allow CORS
-    let url = "http://worldtimeapi.org/api/timezone";
+    let url = "https://www.timeapi.io/api/Time/current/zone?timeZone=Europe/Amsterdam";
 
-    let client = reqwest::Client::new();
+    let client = reqwest::blocking::Client::new();
 
-    let future = client.get(url)
+    //Actix web 3.0 uses an old version of the tokio runtime
+    //you can either find an old enough version of reqwest that matches
+    //Or you can just do this and use the blocking client
+
+    let result = client.get(url)
         //this sets the headers to request json
         .header( "Content-Type", "application/json" )
         //you can alternatively use .json( &X )
         //where X is some json serializable data struct to send as the body
-        //and also sets the Conent-Type to application/json
+        //and it also sets the Content-Type to application/json
         .send();
 
 
-    if let Ok(response) = future.await{
+    if let Ok(response) = result{
         
-        if let Ok(value) = response.json::<serde_json::Value>().await{
+        if let Ok(value) = response.json::<serde_json::Value>(){
 
             let hour = value.get("hour")?.as_i64()?;
             let minute = value.get("minute")?.as_i64()?;
@@ -41,43 +42,26 @@ async pub fn fetch_amsterdam_time( )  -> Option<(i64,i64,i64)>{
 }
 
 
-//given the string id of the post, get the content and the 
+//get the time, a serialized 
 #[actix_web::get("/api/get_time/")]
 async fn get_time(  )-> HttpResponse {
 
-    println!("a user is requesting a list of time zones");
-    
-    let url = format!("http://worldtimeapi.org/api/timezone/America/Toronto");
+    println!("Someone is requesting the time in Amsterdam");
 
-    let client = reqwest::blocking::Client::new();
+    if let Some(time) = fetch_amsterdam_time().await{
 
-    let future = client.get(url)
-        .header("Accept", "application/json")
-        .send();
+        return HttpResponse::Accepted().json( time );
+    }
 
-    let response = future.unwrap();
-
-    let contents: Value = response.json().unwrap();
-
-    let time = &contents["datetime"];
-
-    let time = time.to_string();
-
-    return HttpResponse::Accepted().json( time );
+    return HttpResponse::InternalServerError().body("");
 }
-
-
-
-
-
 
 
 
 #[actix_web::main]
 async fn main()  {
 
-    println!("Starting application");
-
+    println!("application starting");
 
     HttpServer::new(move || {
 
@@ -93,7 +77,5 @@ async fn main()  {
     .bind(("0.0.0.0", 8080)).unwrap()
     .run()
     .await.unwrap();
-
-
 
 }
