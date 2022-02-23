@@ -6,6 +6,29 @@ Run the ./build.sh in order to build the wasm files, before you push to github i
 
 
 
+How it works:
+
+In the the root directory, there are three rust projects
+
+Yew, which is compiled with trunk to render a dist folder that contains the files needed to serve the frontend of the application on the browser
+
+Server, which serves the files in the dist folder, and any other backend services
+
+Shared, which contains serializable structures visible to both the yew and server, so that they can send and receive data between each other
+
+
+build.sh
+
+Builds the files needed for distribution in /yew/dist
+
+Copies that dist folder to the server
+
+Then builds the server and runs it and serves it on port 8080
+
+
+
+
+
 To build and deploying on Google cloud run:
 
 1. Copy the code here, put it in a repository connected to your github account
@@ -18,7 +41,7 @@ To build and deploying on Google cloud run:
 8. Create a service using the image created at the run step, click "allow unauthenticated invocations"
 9. Give it a minute, click on the link the service exposes to find the app on the web
 
-To connect a servive to a domain name:
+To connect a service to a domain name:
 
 1. Buy a domain name on the google account associated with the gcp account
 2. On the cloud build click "manage custom domains"
