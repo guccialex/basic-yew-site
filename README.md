@@ -25,3 +25,4 @@ To connect a servive to a domain name:
 3. Add a mapping, add the service, the domains you own that google can see should be there, select the one you want
 4. Go to https://domains.google.com/registrar/ click "manage" for the domain you mapped the service to
 5. Go to the dns page and add the custom resource records it tells you to add
+6. Wait like an hour, the domain you connected it to will serve the app
