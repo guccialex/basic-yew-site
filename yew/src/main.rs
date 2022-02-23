@@ -93,7 +93,7 @@ impl Component for Model {
 
             timestring = html!{
                 <>
-                {"Right now, it is "}{time.display()}{" in Amsterdam"}
+                {"It's "}{time.display()}{" in Amsterdam right now"}
                 </>
             };
         }
@@ -102,7 +102,7 @@ impl Component for Model {
         }
 
         html! {
-            <div style="display:flex; justify-content:center;">
+            <div >
 
                 <img style="height: 400px;" src="/static/images/1.png" alt="hyperbole and a half"/>
 
