@@ -2,6 +2,8 @@
 
 Base template for a full stack server entirely in rust
 
+This isn't easier than a lot of the other ways to build yew apps, but it's pretty good for deployment, uses https and lets you build structs that the client and server can share entirely in rust.
+
 Run the ./build.sh in order to build the wasm files, before you push to github if you're going to deploy it with the docker file
 
 
