@@ -4,10 +4,11 @@ mod generated;
 use actix_web::{HttpResponse};
 use actix_web::{web, get, post};
 use serde_json::Value;
+use shared::TimeData;
 
 
 //returns (Hour, Minute, Seconds)
-async fn fetch_amsterdam_time( )  -> Option<(i64,i64,i64)>{
+async fn fetch_amsterdam_time( )  -> Option<TimeData>{
 
     let url = "https://www.timeapi.io/api/Time/current/zone?timeZone=Europe/Amsterdam";
 
@@ -34,7 +35,10 @@ async fn fetch_amsterdam_time( )  -> Option<(i64,i64,i64)>{
             let minute = value.get("minute")?.as_i64()?;
             let seconds = value.get("seconds")?.as_i64()?;
 
-            return Some( (hour, minute, seconds) );
+            let timedata = shared::TimeData{hour, minute, seconds};
+
+
+            return Some( timedata );
         }
     }
 
@@ -44,7 +48,7 @@ async fn fetch_amsterdam_time( )  -> Option<(i64,i64,i64)>{
 
 //get the time, a serialized 
 #[actix_web::get("/api/get_time/")]
-async fn get_time(  )-> HttpResponse {
+async fn get_time( )-> HttpResponse {
 
     println!("Someone is requesting the time in Amsterdam");
 
@@ -69,8 +73,7 @@ async fn main()  {
 
         App::new()     
 
-            .service(get_time ) 
-
+            .service(get_time )
             .service(actix_web_static_files::ResourceFiles::new("/", generated).resolve_not_found_to_root() )
 
     })
