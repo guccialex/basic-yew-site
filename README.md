@@ -10,7 +10,7 @@ Run the ./build.sh in order to build the wasm files, before you push to github i
 
 How it works:
 
-In the the root directory, there are three rust projects
+In the the root directory there are three rust projects
 
 Yew, which is compiled with trunk to render a dist folder that contains the files needed to serve the frontend of the application on the browser
 
@@ -23,15 +23,15 @@ build.sh
 
 Builds the files needed for distribution in /yew/dist
 
-Copies that dist folder to the server
+Copies that dist to the server folder
 
-Then builds the server and runs it and serves it on port 8080
-
-
+Then builds the server and runs it to serves it on port 8080
 
 
 
-To build and deploying on Google cloud run:
+
+
+To build and deploy on Google cloud run:
 
 1. Copy the code here, put it in a repository connected to your github account
 2. After editing the code, run build.sh before commiting it to your repo to use, to update the dist contents in the server directory with the up to date generated wasm code and static files of the yew application
