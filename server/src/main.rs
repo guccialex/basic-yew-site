@@ -73,7 +73,7 @@ async fn main()  {
 
         App::new()     
 
-            .service(get_time )
+            .service( get_time )
             .service(actix_web_static_files::ResourceFiles::new("/", generated).resolve_not_found_to_root() )
 
     })

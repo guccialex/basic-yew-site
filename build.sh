@@ -1,3 +1,6 @@
+#to install trunk run
+#cargo install --locked trunk
+
 #this builds the program in /yew using trunk, creating the dist directory with the web code and assets
 #copies it to /server
 #then builds and runs the server
